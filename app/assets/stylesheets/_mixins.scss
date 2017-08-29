@@ -1,0 +1,73 @@
+
+// Grid
+@mixin grid($main-axis: x, $justify-content: null, $align-items: null, $align-content: null) {
+  display: flex;
+  justify-content: $justify-content;
+  align-items: $align-items;
+
+  @if $main-axis == x {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: $align-content;
+  }
+
+  @if $main-axis == y {
+    flex-direction: column;
+  }
+
+  @each $mq-grid-gutter in $mq-grid-gutters {
+    $mq: nth($mq-grid-gutter, 1);
+    $grid-gutter: nth($mq-grid-gutter, 2);
+
+    @include mq($mq) {
+      margin: {
+        right: half(-$grid-gutter);
+        left:  half(-$grid-gutter);
+      };
+    }
+  }
+}
+
+@mixin grid-col {
+  @each $mq-grid-gutter in $mq-grid-gutters {
+    $mq: nth($mq-grid-gutter, 1);
+    $grid-gutter: nth($mq-grid-gutter, 2);
+
+    @include mq($mq) {
+      padding: {
+        right: half($grid-gutter);
+        left:  half($grid-gutter);
+      };
+    }
+  }
+}
+
+@mixin grid-cols($cols-count, $cols-total) {
+  width: $cols-count / $cols-total * 100%;
+}
+
+
+// Media queries
+@mixin mq($mq-breakpoint) {
+  @if map-has-key($mq-breakpoints, $mq-breakpoint) {
+    $mq-device: '';
+    @if $enable-mq-device == true {
+      $mq-device: '-device';
+    }
+
+    $mq-range: 'min';
+    @if $mq-breakpoint == nth(map-keys($mq-breakpoints), 1) {
+      $mq-range: 'max';
+    }
+
+    @media all and (#{$mq-range}#{$mq-device}-width: map-get($mq-breakpoints, $mq-breakpoint)) {
+      @content;
+    }
+  }
+}
+
+// Font
+@mixin font($font-size, $line-height) {
+  font-size: $font-size;
+  line-height: strip-units($line-height) / strip-units($font-size);
+}

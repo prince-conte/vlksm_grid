@@ -1,0 +1,25 @@
+// variables
+
+$mq-breakpoints: (
+        'xs': 768px,
+        'md': 1024px
+);
+
+// Container
+$mq-container-widths: (
+        'xs': 100%,
+        'md': 1024px
+);
+
+$mq-container-indents: (
+        'xs': 10px,
+        'md': 10px
+);
+
+// Grid
+$mq-grid-gutters: (
+        'xs': 10px,
+        'md': 10px
+);
+
+$color-brand: #b23636;
