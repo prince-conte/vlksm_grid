@@ -3,6 +3,17 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
+var jade = require('gulp-jade');
+
+gulp.task('templates', function() {
+    var YOUR_LOCALS = {};
+
+    gulp.src('app/views/*.jade')
+        .pipe(jade({
+            locals: YOUR_LOCALS
+        }))
+        .pipe(gulp.dest('app/views/'))
+});
 
 gulp.task('sass', function () {
     return gulp.src('app/assets/stylesheets/*.scss')
@@ -14,6 +25,7 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('app/assets/stylesheets/'));
 });
 
-gulp.task('sass:watch', function () {
+gulp.task('watch', function () {
     gulp.watch('app/assets/stylesheets/*.scss', ['sass']);
+    gulp.watch('app/views/*.jade', ['templates']);
 });
